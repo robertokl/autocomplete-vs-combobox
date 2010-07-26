@@ -1,0 +1,31 @@
+<html> 
+  <head> 
+    <script type="text/javascript" src="http://jquery.bassistance.de/autocomplete/lib/jquery.js"></script> 
+    <script type='text/javascript' src='http://jquery.bassistance.de/autocomplete/jquery.autocomplete.js'></script> 
+    <link rel="stylesheet" type="text/css" href="http://jquery.bassistance.de/autocomplete/jquery.autocomplete.css" /> 
+    <script>
+      $(function (){
+        $("#auto_cities_name").autocomplete("/cities.csv");
+        $("#auto_cities_name_with_id").autocomplete("/cities.csv");
+        $("#auto_cities_name_with_id").result(function(event, data, formatted) {
+          $("#auto_cities_id").val(data[1]);
+        });
+      });
+    </script>
+  </head> 
+  <body> 
+    <form action="/cities" method="post"> 
+      <select name="combo_cities"> 
+        <%- opt = "<option value='%s'>%s</option>" -%>
+        <%= @cities.map{ |c| opt % [c.id, c.name] }.join("\n") %>
+      </select> 
+      <p></p> 
+      <input id="auto_cities_name" name="auto_cities_name" />
+      <p></p>
+      <input id="auto_cities_name_with_id" name="auto_cities_name_with_id" />
+      <input id="auto_cities_id" name="auto_cities_id" size="5" />
+      <p></p>
+      <input type="submit" />
+    </form> 
+  </body> 
+</html> 
